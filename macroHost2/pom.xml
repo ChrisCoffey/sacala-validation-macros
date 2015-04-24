@@ -1,0 +1,132 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>macroHost2</groupId>
+	<artifactId>macroHost2</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
+
+
+
+	<properties>
+		<scalaVersion>2.11</scalaVersion>
+		<scalaFullVersion>2.11.6</scalaFullVersion>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>${scalaFullVersion}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.parboiled</groupId>
+			<artifactId>parboiled_2.11</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+
+
+		<!-- <dependency> <groupId>org.scala-lang.modules</groupId> <artifactId>scala-pickling_${scalaVersion}</artifactId> 
+			<version>0.10.0</version> </dependency> -->
+
+
+
+		<!-- latest but missing core -->
+		<!-- <dependency> <groupId>org.eclipse.jdt.core.compiler</groupId> <artifactId>ecj</artifactId> 
+			<version>4.4.2</version> </dependency> -->
+
+		<!-- this has no sources -->
+		<!-- <dependency> <groupId>org.eclipse.jdt</groupId> <artifactId>org.eclipse.jdt.core</artifactId> 
+			<version>3.10.0</version> </dependency> -->
+
+
+
+
+		<!-- test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+	<!-- <repositories> <repository> <id>snapshots-repo</id> <url>https://oss.sonatype.org/content/repositories/snapshots</url> 
+		<releases><enabled>false</enabled></releases> <snapshots><enabled>true</enabled></snapshots> 
+		</repository> </repositories> -->
+	<!-- <profiles> <profile> <id>allow-snapshots</id> <activation><activeByDefault>true</activeByDefault></activation> 
+		<repositories> <repository> <id>snapshots-repo</id> <url>https://oss.sonatype.org/content/repositories/snapshots</url> 
+		<releases><enabled>false</enabled></releases> <snapshots><enabled>true</enabled></snapshots> 
+		</repository> </repositories> </profile> </profiles> -->
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>scala-compile-first</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>add-source</goal>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>scala-test-compile</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<scalaVersion>${scalaFullVersion}</scalaVersion>
+					<!-- Doesn't seem to need a target jvm -->
+				</configuration>
+			</plugin>
+
+<plugin>
+  <artifactId>maven-assembly-plugin</artifactId>
+  <configuration>
+    <archive>
+      <manifest>
+        <mainClass>fully.qualified.MainClass</mainClass>
+      </manifest>
+    </archive>
+    <descriptorRefs>
+      <descriptorRef>jar-with-dependencies</descriptorRef>
+    </descriptorRefs>
+  </configuration>
+  <executions>
+    <execution>
+      <id>make-assembly</id> <!-- this is used for inheritance merges -->
+      <phase>package</phase> <!-- bind to the packaging phase -->
+      <goals>
+        <goal>single</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+
+		</plugins>
+	</build>
+</project>
